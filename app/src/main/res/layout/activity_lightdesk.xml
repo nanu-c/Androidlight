@@ -23,6 +23,30 @@
     <FrameLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
+        <SeekBar
+            android:id="@+id/seek1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="1dp"
+            android:progress="0"
+            android:secondaryProgress="0"
+            android:visibility="visible"
+            android:layout_gravity="top|center_horizontal"/>
+        <LinearLayout
+            android:id="@+id/refresh_match_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            android:visibility="visible" />
+        <SeekBar
+            android:id="@+id/seek2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="0dp"
+            android:progress="0"
+            android:secondaryProgress="0"
+            android:layout_gravity="center|center_horizontal"/>/>
 
         <LinearLayout android:id="@+id/fullscreen_content_controls"
             style="?metaButtonBarStyle"
@@ -32,6 +56,7 @@
             android:background="@color/black_overlay"
             android:orientation="horizontal"
             tools:ignore="UselessParent">
+
 
             <Button android:id="@+id/dummy_button"
                 style="?metaButtonBarButtonStyle"

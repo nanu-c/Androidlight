@@ -29,10 +29,10 @@ import artnet4j.ArtNetNode;
 import artnet4j.events.ArtNetDiscoveryListener;
 import artnet4j.packets.ArtDmxPacket;
 
-public class PollTest implements ArtNetDiscoveryListener {
+public class AndroidLight implements ArtNetDiscoveryListener {
 
     public static void test1 (String[] args) {
-        new PollTest().test();
+        new AndroidLight().test();
     }
 
     private ArtNetNode netLynx;
@@ -62,49 +62,72 @@ public class PollTest implements ArtNetDiscoveryListener {
             System.out.println(n);
         }
     }
-
+    public int run=1;
+    public int wertR=0;
+    public int wertG=0;
     @Override
     public void discoveryFailed(Throwable t) {
         System.out.println("discovery failed");
     }
-
    	public void test() {
-        ArtNet artnet = new ArtNet();
-        ArtDmxPacket  dmx2 = new ArtDmxPacket();
-        try {
-            artnet.start();
-            artnet.getNodeDiscovery().addListener(this);
-            //artnet.startNodeDiscovery();
-            System.out.println(dmx2.getData());
-            int far=0;
-            while (true) {
-            	
-            		int universe = 01;
+        while (true) {
+            ArtNet artnet = new ArtNet();
+            ArtDmxPacket dmx2 = new ArtDmxPacket();
+            try {
+                artnet.start();
+                artnet.getNodeDiscovery().addListener(this);
+                //artnet.startNodeDiscovery();
+                //System.out.println(dmx2.getData());
+                int far = 0;
+                int universe = 01;
+
+
+                while (true) {
+                    //System.out.println(run);
                     ArtDmxPacket dmx = new ArtDmxPacket();
-                    dmx.setUniverse(0,1);
-                    dmx.setSequenceID(sequenceID % 255);
+                    dmx.setUniverse(0, 1);
                     byte[] buffer = new byte[510];
-                    for (int i = 0; i < buffer.length-3; i++) {
-                        if (i%3==0){buffer[i+far] =
-                                (byte) (255);}
+
+
+                    dmx.setSequenceID(sequenceID % 255);
+                    if (run==1){
+                        for (int i = 0; i < buffer.length - 3; i++) {
+                            if (i % 3 == 0) {
+                                buffer[i + far] =
+                                        (byte) (20);
+                            }
+                        }
                     }
+                    if (run==2){
+                        for (int i = 0; i < buffer.length - 3; i++) {
+                            if (i % 3 == 0) {
+                                buffer[i] =
+                                        (byte) (wertR);
+                                buffer[i+1] =
+                                        (byte) (wertG);
+                            }
+                        }
+                    }
+                   
                     far++;
-                    if (far==3)far=0;
+                    if (far == 3) far = 0;
                     dmx.setDMX(buffer, buffer.length);
                     artnet.unicastPacket(dmx, "192.168.0.100");
-                    dmx.setUniverse(0,
-                            1);
-                    artnet.unicastPacket(dmx, "192.168.0.100");
                     sequenceID++;
-                    System.out.println(dmx.getSubnetID());
-                Thread.sleep(100);
+                    //System.out.println(dmx.getSubnetID());
+                    if (run==1)Thread.sleep(100);
+                    else Thread.sleep(10);
+                    while (run==0){
+                        Thread.sleep(100);
+                    }
+                }
+            } catch (SocketException e) {
+                throw new AssertionError(e);
+            } catch (ArtNetException e) {
+                throw new AssertionError(e);
+            } catch (InterruptedException e) {
+                throw new AssertionError(e);
             }
-        } catch (SocketException e) {
-        	throw new AssertionError(e);
-        } catch (ArtNetException e) {
-        	throw new AssertionError(e);
-        } catch (InterruptedException e) {
-        	throw new AssertionError(e);
         }
     }
 }

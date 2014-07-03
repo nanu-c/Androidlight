@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.SeekBar;
 
 
 /**
@@ -18,6 +20,7 @@ import android.view.View;
  * @see SystemUiHider
  */
 public class lightdesk extends Activity {
+    final AndroidLight tets= new AndroidLight();
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -46,11 +49,15 @@ public class lightdesk extends Activity {
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
+    /**
+     *seekbar
+     */
+    private SeekBar colorControl = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        PollTest tets= new PollTest();
-        tets.test();
+
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_lightdesk);
@@ -116,7 +123,66 @@ public class lightdesk extends Activity {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        Button startButton = (Button) findViewById(R.id.dummy_button);
+        SeekBar seek1 = (SeekBar) findViewById(R.id.seek1);
+        SeekBar seek2 = (SeekBar) findViewById(R.id.seek2);
+        seek1.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (tets.run!=2)tets.run=2;
+                tets.wertR=i;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        seek2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (tets.run!=2)tets.run=2;
+                tets.wertG=i;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+        int i=0;
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (tets.run==1)tets.run=0;
+                else {tets.run=1;}
+            }
+        });
+
+        new Thread(new Runnable() {
+            public void run(){
+
+                tets.test();
+
+
+
+            }
+        }).start();
+
+
+
     }
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
