@@ -108,7 +108,7 @@ public class AndroidLight implements ArtNetDiscoveryListener {
                             }
                         }
                     }
-                   
+
                     far++;
                     if (far == 3) far = 0;
                     dmx.setDMX(buffer, buffer.length);
