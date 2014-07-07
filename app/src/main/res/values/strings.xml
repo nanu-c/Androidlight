@@ -3,6 +3,10 @@
 
     <string name="app_name">Android Light</string>
     <string name="dummy_button">Start/Stop</string>
-    <string name="dummy_content">Android\nLight</string>
+    <string name="titel">Android\nLight</string>
+    <string name="notitel">   </string>
+    <string name="OptionButton">Options</string>
+    <string name="slider_name">RGB</string>
+    <string name="IP">"192.168.0.100"</string>
 
 </resources>
