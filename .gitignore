@@ -31,3 +31,5 @@ Thumbs.db
 .idea/workspace.xml
 .gradle
 build/
+.*
+!/.gitignore
